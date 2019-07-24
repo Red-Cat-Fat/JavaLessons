@@ -7,8 +7,18 @@ import java.util.HashSet;
 
 public class JsonLibrary implements ILibrary {
 
+    //это костыль для JSONLibrary,
+    //(но изначально планировалось реализовать паттерн стратегии для указания способа хранения данных)
+    //так как я не знаю как в Java подсовывать наследника вместо родителя,
+    //а уже поздно, и я хочу спать
     private HashMapLibrary baseLibrary;
     private String filePath;
+
+    public JsonLibrary(){
+        this.filePath = "D:/library.json";
+        baseLibrary = new HashMapLibrary();
+    }
+
     public JsonLibrary(String filePath) {
         this.filePath = filePath;
         baseLibrary = new HashMapLibrary(ReadFile(this.filePath));
@@ -38,31 +48,31 @@ public class JsonLibrary implements ILibrary {
     @Override
     public void addBook(@NotNull String bookName, @NotNull int yearOfEtitor, @NotNull Author author) {
         baseLibrary.addBook(bookName,yearOfEtitor,author);
-        SaveFile(this.filePath);
+        SaveFile();
     }
 
     @Override
     public void addBook(@NotNull Book newBook, @NotNull Author author) {
         baseLibrary.addBook(newBook, author);
-        SaveFile(this.filePath);
+        SaveFile();
     }
 
     @Override
     public void addBook(@NotNull FullBookData fullBookData) {
         baseLibrary.addBook(fullBookData);
-        SaveFile(this.filePath);
+        SaveFile();
     }
 
     @Override
     public void changeBook(@NotNull Book oldBook, @NotNull Book newBook, @NotNull Author author) {
         baseLibrary.changeBook(oldBook, newBook, author);
-        SaveFile(this.filePath);
+        SaveFile();
     }
 
     @Override
     public void removeBook(@NotNull Book book, @NotNull Author author) {
         baseLibrary.removeBook(book, author);
-        SaveFile(this.filePath);
+        SaveFile();
     }
 
     @Override
@@ -70,8 +80,8 @@ public class JsonLibrary implements ILibrary {
         return baseLibrary.getBooks(author);
     }
 
-    private void SaveFile(String pathFile) {
-        File libraryFile = new File(pathFile);
+    public void SaveFile() {
+        File libraryFile = new File(this.filePath);
         if (libraryFile.exists()) {
             try {
                 libraryFile.delete();
