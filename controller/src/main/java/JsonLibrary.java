@@ -14,14 +14,30 @@ public class JsonLibrary implements ILibrary {
     private HashMapLibrary baseLibrary;
     private String filePath;
 
+    private void TryLoadFile(){
+        File file = new File(this.filePath);
+        if (file.exists()) {
+            baseLibrary = new HashMapLibrary(ReadFile(this.filePath));
+            System.out.println("Library contains books:");
+            for (Author author : baseLibrary.getLibrary().keySet()){
+                HashSet<Book> books = baseLibrary.getBooks(author);
+                for(Book book : books){
+                    System.out.println(author + " " + book);
+                }
+            }
+        }else {
+            baseLibrary = new HashMapLibrary();
+        }
+    }
+
     public JsonLibrary(){
         this.filePath = "D:/library.json";
-        baseLibrary = new HashMapLibrary();
+        TryLoadFile();
     }
 
     public JsonLibrary(String filePath) {
         this.filePath = filePath;
-        baseLibrary = new HashMapLibrary(ReadFile(this.filePath));
+        TryLoadFile();
     }
 
     private static HashMap<Author, HashSet<Book>> ReadFile(String filePath){
@@ -47,6 +63,7 @@ public class JsonLibrary implements ILibrary {
 
     @Override
     public void addBook(@NotNull String bookName, @NotNull int yearOfEtitor, @NotNull Author author) {
+        //я не нашёл, можно ли в методах вызывать super() по аналогии base() в c#, потому так
         baseLibrary.addBook(bookName,yearOfEtitor,author);
         SaveFile();
     }
@@ -80,7 +97,7 @@ public class JsonLibrary implements ILibrary {
         return baseLibrary.getBooks(author);
     }
 
-    public void SaveFile() {
+    private void SaveFile() {
         File libraryFile = new File(this.filePath);
         if (libraryFile.exists()) {
             try {
