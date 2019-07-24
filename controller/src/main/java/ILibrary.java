@@ -9,6 +9,4 @@ public interface ILibrary {
     void removeBook(@NotNull Book book, @NotNull Author author);
 
     HashSet<Book> getBooks(@NotNull Author author);
-
-    void SaveFile();
 }

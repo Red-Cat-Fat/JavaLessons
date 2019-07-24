@@ -44,19 +44,19 @@ public class HashMapLibrary implements ILibrary{
     public void changeBook(@NotNull Book oldBook, @NotNull Book newBook, @NotNull Author author) {
         if(library.containsKey(author)) {
             HashSet<Book> books = library.get(author);
-            if (books.equals(oldBook)) {
+            if (books.contains(oldBook)) {
                 books.remove(oldBook);
                 books.add(newBook);
+                System.out.println("Change book: " + oldBook + " -> " + newBook);
             }
         }
-        System.out.println("Change book: " + oldBook + " -> " + newBook);
     }
 
     @Override
     public void removeBook(@NotNull Book book, @NotNull Author author) {
         if(library.containsKey(author)) {
             HashSet<Book> books = library.get(author);
-            if (books.equals(book)) {
+            if (books.contains(book)) {
                 books.remove(book);
                 System.out.println("Remove book: " + author + " " + book);
             }
@@ -69,12 +69,5 @@ public class HashMapLibrary implements ILibrary{
             return library.get(author);
         }
         return null;
-    }
-
-    @Override
-    public void SaveFile() {
-        //это костыль для JSONLibrary,
-        // так как я не знаю как в Java подсовывать наследника вместо родителя,
-        // а уже поздно, и я хочу спать
     }
 }

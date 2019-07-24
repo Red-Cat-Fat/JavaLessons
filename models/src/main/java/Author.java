@@ -2,13 +2,8 @@ import lombok.Data;
 
 @Data
 public class Author {
-    private String name;
-    private String surname;
-
-    public Author(String name, String surname){
-        setName(name);
-        setSurname(surname);
-    }
+    private final String name;
+    private final String surname;
 
     @Override
     public String toString() {
