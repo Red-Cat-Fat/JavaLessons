@@ -1,7 +1,9 @@
-import com.sun.istack.internal.NotNull;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Optional;
 
 @NoArgsConstructor
 public class HashMapLibrary implements ILibrary{
@@ -10,6 +12,7 @@ public class HashMapLibrary implements ILibrary{
         this.library = library;
     }
 
+    @Getter
     private HashMap<Author, HashSet<Book>> library = new HashMap<>();
 
     @Override
@@ -28,6 +31,13 @@ public class HashMapLibrary implements ILibrary{
             books.add(newBook);
             library.put(author, books);
         }
+    }
+
+    @Override
+    public void addBook(@NotNull FullBookData fullBookData) {
+        Book book = fullBookData.getBook();
+        Author author = fullBookData.getAuthor();
+        addBook(book, author);
     }
 
     @Override
