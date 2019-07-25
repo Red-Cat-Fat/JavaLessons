@@ -7,7 +7,7 @@ public class LibraryFactory {
             case HashMapLibrary:
                 return new HashMapLibrary();
             case JSONType:
-                return new JsonLibrary(new HashMapLibrary());
+                return new JsonLibrary(new HashMapLibrary(), "library.json");
             case DataBaseType:
                 return null;
         }

@@ -1,0 +1,12 @@
+{
+  "Petr Ivanov":
+  [
+  {"name":"How to work","yearOfEdition":2019},
+  {"name":"How to work every night","yearOfEdition":2019}
+  ],
+  "Lev Tolstoy":
+  [
+    {"name":"Anna Karenina","yearOfEdition":1873},
+    {"name":"War and peace","yearOfEdition":1873}
+  ]
+}

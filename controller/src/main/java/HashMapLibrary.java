@@ -8,25 +8,12 @@ import java.util.Set;
 @NoArgsConstructor
 public class HashMapLibrary implements ILibrary{
 
-    public HashMapLibrary(HashMap<Author, HashSet<Book>> library){
+    HashMapLibrary(HashMap<Author, HashSet<Book>> library){
         this.library = library;
     }
 
     @Getter
     private HashMap<Author, HashSet<Book>> library = new HashMap<>();
-
-    @Override
-    public void addBook(@NotNull String bookName, @NotNull int yearOfEtitor, @NotNull Author author) {
-        Book newBook = new Book(bookName, yearOfEtitor);
-        addBook(newBook, author);
-    }
-
-    @Override
-    public void addBook(@NotNull FullBookData fullBookData) {
-        Book book = fullBookData.getBook();
-        Author author = fullBookData.getAuthor();
-        addBook(book, author);
-    }
 
     @Override
     public void addBook(@NotNull Book newBook, @NotNull Author author) {
@@ -65,7 +52,7 @@ public class HashMapLibrary implements ILibrary{
     }
 
     @Override
-    public HashSet<Book> getBooks(Author author) {
+    public HashSet<Book> getBooks(@NotNull Author author) {
         if(library.containsKey(author)){
             return library.get(author);
         }
@@ -75,5 +62,10 @@ public class HashMapLibrary implements ILibrary{
     @Override
     public Set<Author> getAllAuthor() {
         return library.keySet();
+    }
+
+    @Override
+    public HashMap<Author, HashSet<Book>> getDataBase() {
+        return library;
     }
 }
