@@ -2,6 +2,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -9,31 +10,31 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Objects;
 
 public class JsonWriteRead {
 
-    private static final class LibraryDataType extends TypeToken<HashMap<Author, HashSet<Book>>> {
-
-    }
-
-    private static HashMap<Author, HashSet<Book>> ReadFile(String filePath) {
+    public static HashMap<Author, HashSet<Book>> ReadFile(String filePath) {
         final URL resource = LibraryFactory.class.getClassLoader().getResource(filePath);
         try {
             final Path path = Paths.get(Objects.requireNonNull(resource).toURI());
             final String json = new String(Files.readAllBytes(path));
             final Gson gson = new Gson();
-            final HashMap<Author, HashSet<Book>> map = gson.fromJson(json, new LibraryDataType().getType());
+
+            Type type = new TypeToken<HashMap<Author, HashSet<Book>>>(){}.getType();
+            final HashMap<Author, HashSet<Book>> map = gson.fromJson(json, type);
             return map;
         } catch (URISyntaxException | IOException e) {
-            e.printStackTrace();
+        } finally {
+            return new HashMap<>();
         }
-        return new HashMap<>();
     }
 
     public static void WriteFile(HashMap<Author, HashSet<Book>> library, String filePath) {
         final Gson gson = new Gson();
-        final String json = gson.toJson(library, new LibraryDataType().getType());
+        Type type = new TypeToken<HashMap<Author, HashSet<Book>>>(){}.getType();
+        final String json = gson.toJson(library,type);
 
         File libraryFile = new File(filePath);
         if (libraryFile.exists()) {

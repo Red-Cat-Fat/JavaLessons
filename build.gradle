@@ -5,7 +5,6 @@ allprojects {
     group 'ru.mail.courses'
     version '1.0-SNAPSHOT'
 
-    mainClassName = "ru.mail.courses.ProgramStarter"
     sourceCompatibility = 1.8
 
     repositories {
@@ -17,8 +16,4 @@ allprojects {
         testImplementation group: 'junit', name: 'junit', version: '4.12'
         compileOnly 'org.projectlombok:lombok:1.16.18'
     }
-}
-dependencies {
-    implementation project(':controller')
-    implementation project(':models')
 }

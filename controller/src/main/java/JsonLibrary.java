@@ -1,7 +1,6 @@
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
-import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,7 +28,7 @@ public class JsonLibrary implements ILibrary {
 
     public JsonLibrary(ILibrary baseLibrary){
         this.baseLibrary = baseLibrary;
-        this.filePath = "D:/library.json";
+        this.filePath = "library.json";
         TryLoadFile();
     }
 

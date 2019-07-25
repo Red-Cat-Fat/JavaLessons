@@ -1,7 +1,10 @@
+import java.util.Scanner;
 
-public class ProgramStarter {
+public class Application {
     public static void main(String[] args){
+        System.out.println("===============================================================");
         Run(LibraryType.HashMapLibrary);
+        System.out.println("===============================================================");
         Run(LibraryType.JSONType);
     }
 
@@ -34,4 +37,3 @@ public class ProgramStarter {
                 new Author("Andrey", "Boronnikov"));
     }
 }
-
