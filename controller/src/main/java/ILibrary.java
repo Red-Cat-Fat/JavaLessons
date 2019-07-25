@@ -1,5 +1,6 @@
 import org.jetbrains.annotations.NotNull;
 import java.util.HashSet;
+import java.util.Set;
 
 public interface ILibrary {
     void addBook(@NotNull String bookName,@NotNull  int yearOfEtitor, @NotNull Author author);
@@ -9,4 +10,5 @@ public interface ILibrary {
     void removeBook(@NotNull Book book, @NotNull Author author);
 
     HashSet<Book> getBooks(@NotNull Author author);
+    Set<Author> getAllAuthor();
 }

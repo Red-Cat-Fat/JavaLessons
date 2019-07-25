@@ -4,14 +4,11 @@ import org.jetbrains.annotations.NotNull;
 import java.io.*;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
 
 public class JsonLibrary implements ILibrary {
 
-    //это костыль для JSONLibrary,
-    //(но изначально планировалось реализовать паттерн стратегии для указания способа хранения данных)
-    //так как я не знаю как в Java подсовывать наследника вместо родителя,
-    //а уже поздно, и я хочу спать
-    private HashMapLibrary baseLibrary;
+    private ILibrary baseLibrary;
     private String filePath;
 
     private void TryLoadFile(){
@@ -19,7 +16,7 @@ public class JsonLibrary implements ILibrary {
         if (file.exists()) {
             baseLibrary = new HashMapLibrary(ReadFile(this.filePath));
             System.out.println("Library contains books:");
-            for (Author author : baseLibrary.getLibrary().keySet()){
+            for (Author author : baseLibrary.getAllAuthor()){
                 HashSet<Book> books = baseLibrary.getBooks(author);
                 for(Book book : books){
                     System.out.println(author + " " + book);
@@ -30,12 +27,12 @@ public class JsonLibrary implements ILibrary {
         }
     }
 
-    public JsonLibrary(){
+    public JsonLibrary(ILibrary baseLibrary){
         this.filePath = "D:/library.json";
         TryLoadFile();
     }
 
-    public JsonLibrary(String filePath) {
+    public JsonLibrary(ILibrary baseLibrary, String filePath) {
         this.filePath = filePath;
         TryLoadFile();
     }
@@ -97,6 +94,11 @@ public class JsonLibrary implements ILibrary {
         return baseLibrary.getBooks(author);
     }
 
+    @Override
+    public Set<Author> getAllAuthor() {
+        return baseLibrary.getAllAuthor();
+    }
+
     private void SaveFile() {
         File libraryFile = new File(this.filePath);
         if (libraryFile.exists()) {
@@ -108,7 +110,7 @@ public class JsonLibrary implements ILibrary {
             }
         }
         try (FileWriter writer = new FileWriter(libraryFile, false)) {
-            for (Author author : baseLibrary.getLibrary().keySet()) {
+            for (Author author : baseLibrary.getAllAuthor()) {
                 HashSet<Book> books = getBooks(author);
                 for (Book book : books) {
                     FullBookData fullBookData = new FullBookData(author, book);

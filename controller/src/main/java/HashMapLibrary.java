@@ -3,6 +3,7 @@ import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 public class HashMapLibrary implements ILibrary{
@@ -69,5 +70,10 @@ public class HashMapLibrary implements ILibrary{
             return library.get(author);
         }
         return null;
+    }
+
+    @Override
+    public Set<Author> getAllAuthor() {
+        return library.keySet();
     }
 }
